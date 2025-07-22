@@ -4,12 +4,14 @@ const dotenv = require('dotenv').config();
 const multer = require('multer');
 const path = require('path');
 const cors = require('cors');
-
+import { fileURLToPath } from "url";
 const connectDataBase = require('./config/dataBaseConnection');
 const { errorHandler } = require('./Middleware/errorMiddleware');
 
 const port = process.env.PORT || 5000;
 const app = express();
+
+
 
 // Connect to MongoDB
 connectDataBase();
@@ -35,14 +37,12 @@ app.use('/api/upload', require('./Routers/uploadRoutes'));
 // Error Handler
 app.use(errorHandler);
 
-// ✅ Serve frontend only in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, './frontend/build')));
+// Serve static files from the frontend build
+app.use(express.static(path.join(__dirname, "..", "frontend", "build")));
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, './frontend/build/index.html'));
-  });
-}
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "frontend", "build", "index.html"));
+});
 
 // Start server
 app.listen(port, () => {
