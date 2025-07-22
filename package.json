@@ -1,0 +1,33 @@
+{
+  "name": "stellen",
+  "version": "1.0.0",
+  "main": "backend/server.js",
+ 
+  "scripts": {
+      "server": "cd backend && npm run server",
+      "client": "cd frontend && npm run client",
+      "build": "cd frontend && npm run build",
+      "startstellen":" concurrently  \"npm run server\" \"npm run client\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.14.0",
+    "multer": "^1.4.5-lts.2",
+    "nodemon": "^3.1.9",
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "eslint-plugin-react-hooks": "^5.1.0"
+  }
+}

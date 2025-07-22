@@ -1,0 +1,10 @@
+.pointer {
+  cursor: pointer;
+
+}
+.smoothul {
+  
+  overflow: hidden;
+  transition:  1s ease-out, opacity 0.5s ease-out;
+}
+  

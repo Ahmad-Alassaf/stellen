@@ -1,0 +1,49 @@
+.baseStyle {
+  background-Color: #0C2577;
+  transition: all 0.3s ease,
+}
+
+
+ .stickyStyle  {
+  position: fixed !important;
+  top: 10px;
+  left: 0;
+  right:0;
+  border-radius:10px;
+  z-index:  1000;
+  width:90%;
+  margin:0 auto;
+  box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.5);
+  background-color: rgb(37, 70, 179);
+   
+}
+.nav-item{
+    
+     transition: all 0.4s ease,
+
+}
+
+.nav-item:hover{
+    position: relative;
+    background-color: white;
+     border-radius: 5px;
+    
+   
+}
+.nav-item:hover .nav-link {
+  color: #0C2577 !important;
+}
+.nav-item:hover::after{
+     content: '';
+    
+  position: absolute;
+  bottom: 0;              /* Position line at the bottom */
+  left: 0;
+  height: 5px;            /* Thickness of the line */
+  width: 100%;            /* Full width */
+  background-color:goldenrod; /* Your line color */
+  
+  
+  transition: all 0.7s ease;
+}
+
