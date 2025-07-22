@@ -24,10 +24,8 @@
     "mongoose": "^8.14.0",
     "multer": "^1.4.5-lts.2",
     "nodemon": "^3.1.9",
-    "sharp": "^0.33.5"
-  },
-  "devDependencies": {
-    "concurrently": "^9.1.2",
-    "eslint-plugin-react-hooks": "^5.1.0"
+    "sharp": "^0.33.5",
+     "concurrently": "^9.1.2"
   }
+ 
 }
