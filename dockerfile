@@ -1,32 +1,31 @@
-# Use official Node.js image
-FROM node:18
+# Stage 1: Build frontend
+FROM node:18 as frontend-builder
+WORKDIR /app/frontend
+COPY frontend/package*.json ./
+RUN npm install
+COPY frontend .
+RUN npm run build
 
-# Set working directory
+# Stage 2: Build backend
+FROM node:18 as backend-builder
+WORKDIR /app/backend
+COPY backend/package*.json ./
+RUN npm install --production
+COPY backend .
+
+# Copy frontend build into backend
+COPY --from=frontend-builder /app/frontend/build /app/backend/build
+
+# Final Stage: Production Image
+FROM node:18-slim
+
 WORKDIR /app
 
-# Copy root package.json and install concurrently
-COPY package.json package-lock.json ./
-RUN npm install
+# Copy only the backend with build and production deps
+COPY --from=backend-builder /app/backend ./
 
-# Copy and build frontend
-COPY frontend ./frontend
-RUN cd frontend && npm install && npm run build
-
-# Copy backend files
-COPY backend ./backend
-RUN cd backend && npm install 
-
-# Copy build folder into backend (to serve React via Express)
-RUN cp -r frontend/build backend/
-
-# Set working directory to backend
-WORKDIR /app/backend
-
-# Expose port required by Google Cloud Run
+# Set environment variables and ports
+ENV PORT=8080
 EXPOSE 8080
 
-# Set environment variable PORT to 8080 (Cloud Run will override it)
-ENV PORT=8080
-
-# Start the server (make sure server.js uses process.env.PORT)
-CMD [ "npm","run","start" ]
+CMD ["node", "server.js"]
