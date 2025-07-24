@@ -6,7 +6,7 @@
   "scripts": {
       "server": "cd backend && npm install &&   npm run server",
       "client": "cd frontend && npm run client",
-       "build":"cd frontend && npm run build",
+       "build":"cd frontend && npm install && npm run build",
       "start":" npm run server "
   },
   "keywords": [],
