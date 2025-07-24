@@ -4,12 +4,16 @@
   "main": "backend/server.js",
  
   "scripts": {
-      "server": "cd backend && npm install &&   npm run server",
+      
       "serverdev":"cd backend && npm run server",
-      "client": "cd frontend && npm run client",
-       "build":"cd frontend &&  npm run build",
-      "start":" npm run server ",
-      "startdev":"concurrently \"npm run serverdev\" \"npm run client\" "
+      "clientdev": "cd frontend && npm run client",
+      "builddev":"cd frontend &&  npm run build",
+      "startdev":"concurrently \"npm run serverdev\" \"npm run clientdev\" ",
+      
+      "server": "cd backend && npm install &&   npm run server",
+      "build":"cd frontend && npm install &&  npm run build",
+      "start":" npm run server "
+     
   },
   "keywords": [],
   "author": "",
