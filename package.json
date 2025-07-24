@@ -7,7 +7,7 @@
       "server": "cd backend && npm install &&   npm run server",
       "client": "cd frontend && npm run client",
        "build":"cd frontend && npm run build",
-      "start":" concurrently   \"npm run server\" "
+      "start":" npm run server "
   },
   "keywords": [],
   "author": "",
