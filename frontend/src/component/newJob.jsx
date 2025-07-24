@@ -16,7 +16,7 @@ const NewJob = () => {
     const {user}=useSelector((state)=>state.auth)
 
    const headers={            
-            Authorization:`Bearer ${user.token}`
+            Authorization:`Bearer ${user?.token}`
         }
            const{id}=useParams()
            const navigate=useNavigate()
@@ -87,7 +87,7 @@ const NewJob = () => {
             console.log(error)
             const headers={   
                
-                Authorization:`Bearer ${user.token}`
+                Authorization:`Bearer ${user?.token}`
             }
             try {  
                 console.log('submittion new job and dataForm values:')
