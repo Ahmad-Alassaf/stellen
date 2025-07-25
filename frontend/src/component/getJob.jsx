@@ -146,7 +146,7 @@ const GetJob = () => {
   return (
    
     <div className='container'>
-       { job ? <div className="card mb-1" >
+       { job ? <div className="card mb-1 border-0" >
                
                 <div   className="card-header pt-0 px-0" >
                         {loading && <div>Loading ...</div>}
@@ -217,18 +217,17 @@ const GetJob = () => {
                     <p className='text-muted fst-italic '> posted by : {job.user?.username}</p> 
                    
                 </div>
-                <div className="card-footer  d-flex justify-content-between text-primary">
-                  
-                    <div className=''>
-                         
-                        <Comment job={job} /> 
-
-                    </div>
-                      <div><button className='btn btn-primary' disabled={job.candidateList?.some(candidate=>candidate===user?._id) ? true:false} onClick={handleApply}>ich bin interessiert</button></div>
-                    <div>
+                <div className="card-footer  row text-primary ">
+                    <div className="col-12 d-flex justify-content-between">
+                      <div className=' '> <Comment job={job} /> </div>
+                    <div className=' '>
                         {job.savedJobList?.length } <button className={job.savedJobList?.some(saved=>saved.userId===user?._id) ? 'btn btn-primary' : 'btn btn-secondary ' } onClick={()=>saveunsaveJob(job)}><FaStore /></button>
                         {job.likes.length }  <button className={job.likes.some(like=>like.userId===user?._id) ? 'btn btn-primary' : 'btn btn-secondary '} onClick={()=>givePullLike(job)}>   <BiSolidLike /></button>
 
+                    </div>
+                    </div>
+                     <div className='col-12   col-md-4 my-1 '>
+                      <button className='btn btn-primary w-100' disabled={job.candidateList?.some(candidate=>candidate===user?._id) ? true:false} onClick={handleApply}>ich bin interessiert</button>
                     </div>
                   
                </div>

@@ -129,15 +129,13 @@ const styles = {
   return (
     <div className=''>
        { job ? <div className="card mb-1" >
-               
+
                 <div   className="card-header pt-0 px-0" >
                         {loading && <div>Loading image...</div>}
                         {url && (<img src={`${job.imageUrl}`}  className="img-fluid" style={{ width: '100%'}} />)} 
-                       
+
                            <h5 className=' text-primary px-1  text-center' > {job.title}</h5>
-                          
-                       
-                       
+
                         <button className='btn ' data-bs-toggle="modal" data-bs-target="#exampleModal"></button>
                        <div className="d-flex justify-content-center">
                         <p className='p-0 m-0 text-center'>{job.companyName}</p> 
@@ -146,23 +144,19 @@ const styles = {
                         <p className='p-0 m-0 text-center'>{job.location}</p>
 
                        </div>
-                        
-                                                        
                 </div>
                 <div className="card-body  f"  >
                      <h4>Vertrag & Arbeitszeiten</h4>
                         <ul>
                           <li>
                             <ul>
-                              
                               {(job.work.map((item,index)=><li key={index} className='list-group-item'>{item}</li>))}
                             </ul>
                           </li>
                           <li>{job.type }</li>
                           <li><strong>Arbeitstage: </strong>{(job.workingdays.map((day,index)=>day+(index+1<job.workingdays.length ? ', ':'')))}</li>
                         </ul>
-                          
-                     
+
 
                      <h3>Leistungen</h3> 
                       <ul>
@@ -170,38 +164,36 @@ const styles = {
                         <li>{performance}</li>
 
                         ))}
-                      </ul>  
-                     <h3>Vollständige Stellenbeschreibung</h3>                    
+                      </ul>
+                     <h3>Vollständige Stellenbeschreibung</h3>
                     <p className="card-text  lh-lg" >{job.description} </p>
                     <h3>Aufgaben</h3>  
                     <ol>
                        {(job.tasks.map((task)=><li className=''>{task}</li>))}
-                      
+
                     </ol>  
                     <h3>Fähigkeiten</h3>  
                     <ol>
                        {(job.skills.map((skill)=><li className=''>{skill}</li>))}
-                      
+
                     </ol>      
                     <h3>Sprachen</h3>  
                     <ol>
                        {(job.languages.map((language)=><li className=''>{language}</li>))}
-                      
+
                     </ol>
                     <ul className='p-0'>
                       <h3>Adresse</h3>
                       <li  className='list-group-item'>{job.adresse.city}</li>
                       <li className='list-group-item'>{job.adresse.street}</li>
                       <li className='list-group-item'>{job.adresse.hausNumber}</li>
-                      </ul>               
-                   
+                      </ul>
                     Salary: <span className='text-muted fs-6'>{job.salary.amount}</span>
                     <p className='text-muted fst-italic '> posted by : {job.user.username}</p> 
-                   
+
                 </div>
-                
                 <div className="card-footer  d-flex justify-content-between text-primary">
-                  
+
                   <div>
                     <span className='text-primary ' style={{cursor: 'pointer'}} onClick={()=>toggleComment(job._id)}>comments</span>
                     { (addComment===job._id && showComments) ? <Comment job={job} /> :<></>}
@@ -211,12 +203,12 @@ const styles = {
                         {job.likes.length }  <button className={job.likes.some(like=>like.userId===user?._id) ? 'btn btn-primary' : 'btn btn-secondary '} onClick={()=>givePullLike(job)}>   <BiSolidLike /></button>
 
                     </div>
-                  
+
                </div>
          </div>:<></>}
-         
+
     </div>
-  
+
   )
 
 }

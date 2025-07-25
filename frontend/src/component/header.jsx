@@ -41,7 +41,7 @@ useEffect(()=>{
     };
   }, [])
   return (
-    <div className="position-relative">
+    <div className="position-relative" id="navbar">
       <nav className={`navbar navbar-expand-lg navbar-light baseStyle ${isSticky ? 'stickyStyle' : ''}  py-0`}   >
         <div className="container-fluid  ">
           <Link className="navbar-brand   text-white  text-center  py-0 " to="/">
@@ -57,7 +57,7 @@ useEffect(()=>{
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-             <FaBars size={60} color="white" />
+             <FaBars size={50} color="white" />
           </button>
 
           <div className="container collapse navbar-collapse  " id="navbarSupportedContent">

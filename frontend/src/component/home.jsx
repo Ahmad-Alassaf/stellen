@@ -98,20 +98,18 @@ const addfeedback=async()=>{
     
   }
 }
-useEffect(()=>{ 
-    fetchCategories()    
+useEffect(()=>{
+    fetchCategories()
     getAllJobs()
     if(user)
     {
       setFeedback((prev)=>({...prev,name:user.username,email:user.email}))
     }
-   
-   
+
 },[limit,currentPage,screen,filterList,user])
 
   return (
-    <div className=' '>
-        
+    <div className=' '> 
          <section className='py-5 '  style={{color:'#0C2577'}}>
               <div className="container">
                     <div className='py-2 my-1  text-center '>
