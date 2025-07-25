@@ -124,16 +124,14 @@ useEffect(()=>{
                       </div>
                       <button className={showFilter? 'btn btn-primary mb-1':'btn btn-secondary mb-1'} onClick={filtertoggler}><FaFilter /> Filter</button>
                      {showFilter &&( <div className="row   p-0 m-0">
-                        
-                            {categoryList.length>0 && (categoryList.map((item,index)=>(<div key={index} className='col-12 col-md-4 border-bottom  text-left'>
+                             {categoryList.length>0 && (categoryList.map((item,index)=>(<div key={index} className='col-12 col-md-4 border-bottom  text-left'>
                               <input className="form-check-input " type="checkbox"
                                onChange={handleCheckboxChange} 
                                checked={filterList.includes(item._id)}
                                value={item._id}/>{item.category}
-                              
                               </div>))
                             )}
-                        </div>)}       
+                        </div>)}
                       <div className="row ">
                                       {jobs?.length>0 ?  (    jobs.map((job)=>(
                                     <div key={job._id} className='bg-none px-1 col-12 col-md-6 col-lg-4 d-flex mb-1'>
@@ -155,9 +153,8 @@ useEffect(()=>{
          <section className=' py-5 ' style={{backgroundColor:'#0C2577'}}>
             <div className="container" >
                <h3 className='text-white text-center'>Jetzt E-Mail eintragen und keine neuen Jobs mehr verpassen!</h3>
-              <div className="row ">
-             
-              <form className='col-8 m-auto'>
+              <div className="row py-2">
+              <form className='col-12 col-md-8 m-auto'>
                    <div className="input-group">
                        <span className="input-group-text" >@</span>
                        <input type="email" className='form-control' placeholder='email...'/>
@@ -193,8 +190,7 @@ useEffect(()=>{
                     </h3>
 
               <div className="row justify-content-center">
-                    
-                        {recomededJobsList?.length>0 ?  (    recomededJobsList.map((job)=>(
+                                        {recomededJobsList?.length>0 ?  (    recomededJobsList.map((job)=>(
                                                     <div key={job._id} className='bg-none px-1 col-12 col-md-6 col-lg-4 d-flex mb-1'>
                                                         <JobCard job={job}   />
                                                     </div>
@@ -208,28 +204,23 @@ useEffect(()=>{
                   <h3 className='text-center'>
                         Brauchen Sie Hilfe ? <br/> Kontaktieren Sie uns!
                     </h3>
-                <div className="row justify-content-center">
-                 
-                  <div className="col d-flex justify-content-between fs-3">
-                    <div>
+                <div className="row  justify-content-center">
+                    <div className='text-center col-12 col-md-4 border rounded bg-white  m-1 py-1  fs-3'>
                       <p className='m-0 text-center  py-1 ' > <FaPhone /></p>
                       <p>+49151********</p>
-                     
                      </div>
-                    <div>
-                      <p className="m-0 text-center  py-1"><FiMail /></p>
+                    <div className='text-center col-12 col-md-3 border rounded bg-white m-1  py-1 fs-3'>
+                      <p className="m-0 text-center  "><FiMail /></p>
                       <a
                            href='mailto:eng.ahmad.alassag@gmail.com'
-                          aria-label="Send email to eng.ahmad.alassaf@gmail.com" 
+                          aria-label="Send email to eng.ahmad.alassaf@gmail.com"
                       > sende Email!</a>
                     </div>
-                    <div>
+                    <div className='text-center col-12 col-md-4 border rounded bg-white m-1  py-1 fs-3'>
                       <p className="m-0 text-center"><RiContactsFill /></p>
                       <Link to="/contactus" >Kontakt Formular</Link>
                       </div>
-                     
-                  </div>
-                </div>
+                    </div>
 
            </div>
 
@@ -317,8 +308,7 @@ useEffect(()=>{
                     </div>
            </div>
          </section>
-         
-    </div>
+         </div>
   )
 }
 
