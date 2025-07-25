@@ -125,7 +125,7 @@ useEffect(()=>{
                       <button className={showFilter? 'btn btn-primary mb-1':'btn btn-secondary mb-1'} onClick={filtertoggler}><FaFilter /> Filter</button>
                      {showFilter &&( <div className="row   p-0 m-0">
                         
-                            {categoryList.length>0 && (categoryList.map((item,index)=>(<div key={index} className='col-2  text-left'>
+                            {categoryList.length>0 && (categoryList.map((item,index)=>(<div key={index} className='col-12 col-md-4 border-bottom  text-left'>
                               <input className="form-check-input " type="checkbox"
                                onChange={handleCheckboxChange} 
                                checked={filterList.includes(item._id)}

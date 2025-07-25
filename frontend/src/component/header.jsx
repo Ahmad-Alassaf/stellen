@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { FaSignOutAlt, FaSearch } from "react-icons/fa";
+import { FaBars } from 'react-icons/fa';
 import { logout, reset } from "../features/authSlice";
 import '../CSS/navbarMenue.css'
+import logo from '../assets/StellenIcon.png'
+
 
 
 const Header = () => {  
@@ -17,6 +20,12 @@ const Header = () => {
     navigate("/");
     dispatch(reset());
   }
+  const handleLinkToggle = () => {
+  const collapseElement = document.getElementById('navbarSupportedContent');
+  if (collapseElement) {
+    collapseElement.classList.toggle('show'); // manually toggle
+  }
+}
 
 useEffect(()=>{
   
@@ -35,12 +44,12 @@ useEffect(()=>{
     <div className="position-relative">
       <nav className={`navbar navbar-expand-lg navbar-light baseStyle ${isSticky ? 'stickyStyle' : ''}  py-0`}   >
         <div className="container-fluid  ">
-          <Link className="navbar-brand col-sm-12 col-md-1 text-white  text-center  py-0 " to="/">
-           <img src='/images/StellenIcon.PNG' className='img-fluid m-auto rounded'  style={{height:'50px',width:'50px'}}/> Stellen
+          <Link className="navbar-brand   text-white  text-center  py-0 " to="/">
+           <img src={logo} className='img-fluid m-auto rounded'  style={{height:'50px',width:'50px'}}/> Stellen
           </Link>
 
           <button
-            className="navbar-toggler col-sm-12  text-end border-0"
+            className="navbar-toggler   text-end border-0"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent"
@@ -48,34 +57,34 @@ useEffect(()=>{
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon"></span>
+             <FaBars size={60} color="white" />
           </button>
 
           <div className="container collapse navbar-collapse  " id="navbarSupportedContent">
             <ul className="navbar-nav m-auto mb-2 mb-lg-0 text-sm-center ">
              
               <li className="nav-item px-2 text-white  py-2 ">
-                <Link className="nav-link text-white " to="/">
+                <Link className="nav-link text-white " to="/" onClick={handleLinkToggle}>
                  Startseite
                 </Link>
               </li>
               <li className="nav-item px-2 py-2">
-                <Link className="nav-link text-white" to="/newjob">
+                <Link className="nav-link text-white" to="/newjob" onClick={handleLinkToggle}>
                  Für Arbeitsgeber
                 </Link>
               </li>
               <li className="nav-item px-2 py-2">
-                <Link className="nav-link text-white" to="/contactus">
+                <Link className="nav-link text-white" to="/contactus" onClick={handleLinkToggle}>
                  Kontakt
                 </Link>
               </li>
               <li className="nav-item px-2 py-2">
-                <Link className="nav-link text-white" to="/">
+                <Link className="nav-link text-white" to="/" onClick={handleLinkToggle}>
                  Über uns
                 </Link>
               </li>
               <li className="nav-item px-2 py-2">
-                <Link className="nav-link text-white" to="/dashboard">
+                <Link className="nav-link text-white" to="/dashboard" onClick={handleLinkToggle}> 
                  DashBoard
                 </Link>
               </li>
@@ -101,7 +110,7 @@ useEffect(()=>{
                 </li>
               ) : (
                 <li className="navbar-item">
-                  <Link to="/login" className="nav-link">
+                  <Link to="/login" className="nav-link text-white">
                     Login
                   </Link>
                 </li>

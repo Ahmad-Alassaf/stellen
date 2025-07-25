@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FaSearch } from "react-icons/fa";
 import axios from 'axios'
 import CitySearch from './citySearch'
-import { BiBorderRadius } from 'react-icons/bi';
+import jobsuche2 from '../assets/jobsuche2.JPG'
 import {Link ,Navigate,useNavigate} from 'react-router-dom'
 const Search = ({ getCityData}) => {
 
@@ -108,7 +108,7 @@ const style={
    
     <div className=' d-flex justify-content-center align-items-center ' 
     style={{
-    backgroundImage: `url('/images/jobsuche2.jpg')`,
+    backgroundImage: `url(${jobsuche2})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     height: '400px',
