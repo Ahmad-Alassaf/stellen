@@ -5,7 +5,7 @@ const addfeedback=asyncHandler(async(req,res)=>{
     
     const {email,name,text}=req.body
     
-    if(!text || !email ||!name)
+    if(!text )
     {
         res.status(500).json({
             message:'please add all fields',
@@ -14,8 +14,7 @@ const addfeedback=asyncHandler(async(req,res)=>{
     }
     try {
         const feedback=await Feedback.create({
-            name,
-            email,
+            user:req.user.id,
             text
            
         })
@@ -40,7 +39,7 @@ const addfeedback=asyncHandler(async(req,res)=>{
 })
 const getFeedbacks=asyncHandler(async(req,res)=>{
     try {
-        const feedbackList=await Feedback.find()
+        const feedbackList=await Feedback.find().populate('user')
         if(!feedbackList)
         {
             res.status(200).json({

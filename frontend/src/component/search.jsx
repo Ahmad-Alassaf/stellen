@@ -3,7 +3,7 @@ import { FaSearch } from "react-icons/fa";
 import axios from 'axios'
 import CitySearch from './citySearch'
 import jobsuche2 from '../assets/jobsuche2.JPG'
-import {Link ,Navigate,useNavigate} from 'react-router-dom'
+import {Link ,Navigate,useNavigate,useLocation} from 'react-router-dom'
 
 
 const Search = ({ getCityData}) => {
@@ -13,6 +13,7 @@ const Search = ({ getCityData}) => {
     const [city,setCity]=useState('')
     const [searchText,setSearchText]=useState('')
     const navigate = useNavigate()
+    const location=useLocation()
     const [error,setError]=useState(null)
     const [message,setMessage]=useState(null)
     const [height,setHeight]=useState(0)
@@ -75,7 +76,8 @@ const setBackgroundHeight=()=>{
 
 }
 useEffect(()=>{
-  setBackgroundHeight()
+       
+          setBackgroundHeight()
           if(result.length>0)
              navigate(`/showsearchresult`,{state:{result}})
 
@@ -106,48 +108,48 @@ const style={
 }
   return (
 
-    <div id='search' className=' d-flex justify-content-center align-items-center ' 
-    style={{
-    backgroundImage: `url(${jobsuche2})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    height: `${height}px`,
-    width: '100%',
-  }}>
-    <div className="container">
-      <div className='row justify-content-center   p-0 m-0 w-100'>
-         <div className="col-12  col-md-9 justify-content-between d-flex   p-0 rounded " 
-                style={style.searchstyle} onMouseEnter={() => setShadow("5px 5px 15px rgba(0, 0, 0, 0.3)")}
-                                          onMouseLeave={() => setShadow("0px 0px 0px rgba(0,0,0,0)")}>
-                <div className="d-flex col-10"  >
-                  <input
-                    type="text"
-                    name="searchText"
-                    className="form-control  "
-                    style={style.titlestyle}
-                    value={searchText}
-                    placeholder="Jobtitel..."
-                    onChange={(e)=>handleSearchChange(e)} // Handle the search input 
-                  />
-                  <CitySearch  sendCity={getCity}/>
-                  </div>
-                  <div className="col-2 ">
-                      <button
-                        className="btn btn-primary  w-100 h-100"
-                        style={{marginLeft:'5px'}}
-                        type="button" // Changed from submit to button
-                        onClick={runSearch}
-                      > <FaSearch /> </button>
-                    </div>
-         </div>
-         <div className='col-12  col-md-9'>
-               {message &&(<p className={result.length>0 ? 'text-muted':'text-danger   '}> {message}</p>)}
-         </div>
-      </div>
-    </div>
+    (<div id='search' className=' d-flex justify-content-center align-items-center ' 
+          style={{
+          backgroundImage: `url(${jobsuche2})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          height: `${height}px`,
+          width: '100%',
+        }}>
+        <div className="container">
+          <div className='row justify-content-center   p-0 m-0 w-100'>
+            <div className="col-12  col-md-9 justify-content-between d-flex   p-0 rounded " 
+                    style={style.searchstyle} onMouseEnter={() => setShadow("5px 5px 15px rgba(0, 0, 0, 0.3)")}
+                                              onMouseLeave={() => setShadow("0px 0px 0px rgba(0,0,0,0)")}>
+                    <div className="d-flex col-10"  >
+                      <input
+                        type="text"
+                        name="searchText"
+                        className="form-control  "
+                        style={style.titlestyle}
+                        value={searchText}
+                        placeholder="Jobtitel..."
+                        onChange={(e)=>handleSearchChange(e)} // Handle the search input 
+                      />
+                      <CitySearch  sendCity={getCity}/>
+                      </div>
+                      <div className="col-2 ">
+                          <button
+                            className="btn btn-primary  w-100 h-100"
+                            style={{marginLeft:'5px'}}
+                            type="button" // Changed from submit to button
+                            onClick={runSearch}
+                          > <FaSearch /> </button>
+                        </div>
+            </div>
+            <div className='col-12  col-md-9'>
+                  {message &&(<p className={result.length>0 ? 'text-muted':'text-danger   '}> {message}</p>)}
+            </div>
+          </div>
+        </div>
     </div>
 
-  )
+  ))
 }
 
 export default Search

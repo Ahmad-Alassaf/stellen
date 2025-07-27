@@ -35,6 +35,7 @@ const Home = () => {
       email:'',
       text:''
     })  
+    const[feedbackList,setFeedbackList]=useState([])
   const getAllJobs=async()=>{        
     try {
         const response=await axios.get(`/api/jobs/${limit}`, {
@@ -84,7 +85,11 @@ const handleClickOnJob=(job)=>{
 const addfeedback=async()=>{
   
   try {
-    const response=await axios.post(`/api/feedbacks`,feedback)
+     const headers={
+         
+          Authorization:`Bearer ${user?.token}`
+      }
+    const response=await axios.post(`/api/feedbacks`,feedback,{headers})
     if (response.status === 200 || response.status === 201) {
       alert('Thank you for your feedback!');
       // Optionally reset feedback
@@ -98,9 +103,32 @@ const addfeedback=async()=>{
     
   }
 }
+const fetchFeedback=async()=>{
+  try {
+        const headers={
+         
+          Authorization:`Bearer ${user?.token}`
+      }
+    const response=await axios.get(`/api/feedbacks`,{headers})
+      console.log('response from feedback')
+      console.log(response.data)
+     if (response.status === 200 || response.status === 201) {
+          setFeedbackList(response.data.feedbacks)
+    } else {
+      alert('Something went wrong!');
+    }
+    
+  } catch (error) {
+    console.log('error in Feedback...')
+    console.log(error)
+    
+  }
+
+}
 useEffect(()=>{
     fetchCategories()
     getAllJobs()
+    fetchFeedback()
     if(user)
     {
       setFeedback((prev)=>({...prev,name:user.username,email:user.email}))
@@ -168,15 +196,13 @@ useEffect(()=>{
                      Gemerkte Stellen
                     </h3>
               <div className="row justify-content-center ">
-                   
                      {jobs?.length>0 ?  (    jobs.map((job)=>(
                                         <div key={job._id} className='bg-none  col-12 col-md-6 col-lg-4   mb-1'>
                                            { job.savedJobList.map((item)=>(
                                             item.userId===user._id ?<JobCard job={job} />:null
-                                           
-                                           ))  } 
+                                           ))  }
                                         </div>
-                                  ))):(<></>)
+                                  ))):(<p className='text-primary m-0 p-0  text-center'>Sie haben noch keine Stelle gespeichert</p>)
                                   }
               </div>
             </div>
@@ -192,7 +218,7 @@ useEffect(()=>{
                                                     <div key={job._id} className='bg-none px-1 col-12 col-md-6 col-lg-4 d-flex mb-1'>
                                                         <JobCard job={job}   />
                                                     </div>
-                                              ))):(<></>)
+                                              ))):(<p className='text-primary m-0 p-0  text-center'>Check <Link  to="/profile">deine Profil </Link>ob zuständig ausgefühlt</p>)
                                               }
             </div>
             </div>
@@ -257,7 +283,7 @@ useEffect(()=>{
                       placeholder="Your feedback..."
                     ></textarea>
                    </div>
-                   <button type="submit" className='btn btn-primary my-1 w-100 m-auto'> send</button>
+                   <button type="submit" className='btn btn-primary my-1 w-100 m-auto' disabled={!user}> send</button>
                 </form>
 
               </div>
@@ -266,44 +292,17 @@ useEffect(()=>{
          <section className='py-5' style={{backgroundColor:'#F4F4ED',color:'#0C2577'}}>
            <div className="container">
                <h3 className='fw-bold  mb-4 text-center'>Echte Meinungen. Echte Menschen.</h3>
-                 <div id="carouselExampleDark" className="carousel carousel-dark slide" data-bs-ride="carousel">
-                      <div className="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                      </div>
-                      <div className="carousel-inner">
-                        <div className="carousel-item active" data-bs-interval="10000">
-                            {jobs[0]?.description}
-                          <div className="carousel-caption d-none d-md-block">
-                            <h5>First slide label</h5>
-                            <p>Some representative placeholder content for the first slide.</p>
-                          </div>
-                        </div>
-                        <div className="carousel-item" data-bs-interval="2000">
-                           {jobs[0]?.description}
-                          <div className="carousel-caption d-none d-md-block">
-                            <h5>Second slide label</h5>
-                            <p>Some representative placeholder content for the second slide.</p>
-                          </div>
-                        </div>
-                        <div className="carousel-item">
-                            {jobs[0]?.description}
-                          <div className="carousel-caption d-none d-md-block">
-                            <h5>Third slide label</h5>
-                            <p>Some representative placeholder content for the third slide.</p>
-                          </div>
-                        </div>
-                      </div>
-                      <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span className="visually-hidden">Previous</span>
-                      </button>
-                      <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span className="visually-hidden">Next</span>
-                      </button>
+                 <div id="carouselExampleDark" className="   carousel carousel-dark slide" data-bs-ride="carousel">
+                     
+                      <div className="  m-auto   w-50 text-center   carousel-inner">
+                       {feedbackList?.length >0 ? feedbackList.map((item,index)=>
+                        (
+                        <div className={`carousel-item  ${index === 0 ? 'active' : ''}`} data-bs-interval="10000">
+                           <p className='text-center'>{item.user.username}</p>
+                            {item.text}
+                        </div>)):(<></>)}
                     </div>
+           </div>
            </div>
          </section>
          </div>

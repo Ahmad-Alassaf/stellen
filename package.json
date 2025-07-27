@@ -5,7 +5,7 @@
  
   "scripts": {
       
-      "serverdev":"cd backend && npm run server",
+      "serverdev":"cd backend && npm run dev",
       "clientdev": "cd frontend && npm run client",
       "builddev":"cd frontend &&  npm run build",
       "startdev":"concurrently \"npm run serverdev\" \"npm run clientdev\" ",

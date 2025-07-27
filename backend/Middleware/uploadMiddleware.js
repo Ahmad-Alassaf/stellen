@@ -1,17 +1,18 @@
 const multer = require("multer");
 const path = require("path")
 const sharp =require('sharp')
-
 // Configure Multer Storage
+console.log('upload Middleware is called....')
 const storage = multer.diskStorage({
   destination: "public/uploads/",
   filename: (req, file, cb) => {
-    console.log('test from middleware...')
-    cb(null, Date.now() + path.extname(file.originalname)); // Unique filename
-
+    console.log('test from middleware and file :')
+     console.log(file)
+     console.log(path.extname(file.originalname))
+    //cb(null, Date.now() + path.extname(file.originalname)); // Unique filename
+       cb(null,file.originalname)
   },
-});
-
+})
 // File Filter - Allow Only Images
 const fileFilter =async (req, file, cb) => {
   
@@ -23,8 +24,7 @@ const fileFilter =async (req, file, cb) => {
   } else {
     cb(new Error("Only images are allowed!"), false);
   }
-};
-
+}
 // Set Up Multer Middleware
 const upload = multer({
   storage: storage,

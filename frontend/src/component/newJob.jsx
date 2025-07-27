@@ -69,24 +69,19 @@ const NewJob = () => {
                          console.log('Job to edit',response.data) 
                        setJobToEdit(response.data) 
                         console.log('response.data.imageURL',response.data.imageURL)
-                       setDataForm(response.data) 
-                         
-                        setError('') 
-                               
-                      
-                    }
-            
+                       setDataForm(response.data)
+                        setError('')
+                                        }
+
         } catch (error) {
             console.log(error)
-            
         }
 
      }
-    const handleOnSubmit=async(e)=>{       
-             e.preventDefault()  
+    const handleOnSubmit=async(e)=>{
+             e.preventDefault()
             console.log(error)
-            const headers={   
-               
+            const headers={
                 Authorization:`Bearer ${user?.token}`
             }
             try {  
@@ -116,53 +111,48 @@ const NewJob = () => {
                     console.log(formData)
                     const response= await axios.put(`/api/jobs/${id}`,formData,{headers})                   
                     if(response)
-                    {               
-                        
-                        setDataForm(response.data)                      
-                        setError('')  
-                        navigate('/jobslist')        
-                      
+                    {
+                        setDataForm(response.data)
+                        setError('')
+                        navigate('/jobslist')
+
                     }
                 }
                 else{
                     //create
-                    const response= await axios.post(`/api/jobs`,formData,{headers})                   
+                    const response= await axios.post(`/api/jobs`,formData,{headers})
                     if(response)
-                    {               
-                        
-                        setDataForm(response.data)     
+                    {
+                        setDataForm(response.data)
                         setError('')  
-                        navigate('/jobslist')                
-                      
+                        navigate('/jobslist')
+
                     }
 
                 }
-               
-            } catch (err) {           
+
+            } catch (err) {
                 console.log(err)
                 setError(err)
-               
+
             }
-       
+
     }
     const handleMouseOver=(index)=>{
         setHoveredIndex(index)
-     
+
       }
     const handleOnChange=(e)=>{
-       
         setDataForm((prevData)=>({
             ...prevData,
             [e.target.name]:e.target.value
         }))
-       
         if(e.target.name==='location')
            setSelectedCity(null)
-       
     }
     const handleImageChanged=(file)=>{
-        
         console.log('Handle Image Path  Func Called and Pathe is :'+URL.createObjectURL(file))
+         console.log(file)
         setImage(file)
         setDataForm((prev)=>({
             ...prev,
@@ -170,29 +160,21 @@ const NewJob = () => {
          }))
          console.log(dataForm)
      }
-     
       const handleTasksSkillsLanguagesPerformances = (category, value) => {
-         
         setDataForm((prev) => ({
           ...prev,
           [category]:   value // Add value if checked
-           
         }))
       }
-   
-
     // Handle checkbox change
   const handleCheckboxChange = (e, category) => {
-  
-   
     const { value, checked } = e.target    
     console.log(dataForm)
     setDataForm((prev) => ({
       ...prev,
       [category]: checked ? [...prev[category], value] // Add value if checked
         : prev[category].filter((item) => item !== value), // Remove if unchecked
-    }))
-   
+    }))  
   }
     const selectWork=(e)=>{
         e.preventDefault()
@@ -225,31 +207,26 @@ const NewJob = () => {
         }))
 
     }
-     const fetchCategories=async()=>{                                
-                                const data=await getCategories(headers)                                
+     const fetchCategories=async()=>{
+                                const data=await getCategories(headers)
                                 setCategoriesList(data||[])
                             }
-          useEffect(()=>{
-                          
+          useEffect(()=>{ 
                             fetchCategories()  
-                            
-                          
                            if(id)
                            {
                              getJobToEdit(id) 
-                           
                            }
-                           
-                           else{                  
+                           else{
                             if(dataForm?.location?.trim()==='' )
                             {
-                                setFilteredCities([])                            
+                                setFilteredCities([])
                                 return
                             }
                               const results = germanCities.filter(
                                     (city) =>
-                                        city?.name.toLowerCase().startsWith(dataForm?.location?.toLowerCase())                 
-                                    )               
+                                        city?.name.toLowerCase().startsWith(dataForm?.location?.toLowerCase())
+                                    )
                                     setFilteredCities(results.slice(0,10)) 
                                 if(selectedCity)
                                 {  
@@ -257,22 +234,18 @@ const NewJob = () => {
                                         ...dataForm,
                                         location:selectedCity?.name
                                     })
-                                    setFilteredCities([])     
+                                    setFilteredCities([])
                                 }
-                            
+
                             }
-                           
-                           
                         },[id,dataForm.location,selectedCity]
                     )
-    
   return (
     <div className='container-md-fluid container-lg p-0  ' >
         <div className="row p-0  m-0">
             <div className="col-12   col-md-9 mx-auto">
                 <form onSubmit={handleOnSubmit} className=' py-2   rounded '>
-                   
-                   {jobToEdit?.imageUrl &&(  <img src={`${jobToEdit?.imageUrl}`}   className="img-fluid d-block border" />)}               
+                   {jobToEdit?.imageUrl &&(  <img src={`${jobToEdit?.imageUrl}`}   className="img-fluid d-block border" />)}
                     <div className="  m-auto mb-1"> 
                         <ImageUpload getFile={handleImageChanged} />
                     </div>
@@ -283,7 +256,7 @@ const NewJob = () => {
                         <input type="text" value={dataForm.companyName} name='companyName' 
                             placeholder='Firma...'  onChange={handleOnChange} 
                             className=' form-control mb-1' />
-                    </div>                
+                    </div>
                     <div className="row m-auto  mb-1" > 
                         <div className="col-6 p-0">
                              <input type="text" value={dataForm.title} name='title' 
@@ -297,9 +270,7 @@ const NewJob = () => {
                         </select>
 
                         </div>
-                       
-                        
-                    </div> 
+                    </div>
                     <div  className="  m-auto mb-1">
                                     <div className="border rounded p-1 ">
                                         <p className='m-0'><strong>Vertrag</strong></p>
@@ -320,7 +291,7 @@ const NewJob = () => {
                                         </ul>
                                         </div>
                             <div className='border my-1 py-1 rounded '>
-                                <p className='my-0 '><strong>Arbeitstage</strong></p>      
+                                <p className='my-0 '><strong>Arbeitstage</strong></p>
                                 <ul className=' w-100 my-0 px-1 py-0' >
                                                 <li className='  list-group-item'>
                                                     <input type="checkbox"  className=""

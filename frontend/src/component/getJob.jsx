@@ -150,12 +150,8 @@ const GetJob = () => {
                
                 <div   className="card-header pt-0 px-0" >
                         {loading && <div>Loading ...</div>}
-                        { (<img src={`${job.imageUrl}`}  className="img-fluid" style={{ width: '100%'}} />)} 
-                       
+                        { (<img src={`${job.imageUrl}`}  className="img-fluid" style={{ width: '100%'}} />)}
                            <h5 className=' text-primary px-1  text-center' > {job.title}</h5>
-                          
-                       
-                       
                         <button className='btn ' data-bs-toggle="modal" data-bs-target="#exampleModal"></button>
                        <div className="d-flex justify-content-center">
                         <p className='p-0 m-0 text-center'>{job.companyName}</p> 
@@ -164,8 +160,6 @@ const GetJob = () => {
                         <p className='p-0 m-0 text-center'>{job.location}</p>
 
                        </div>
-                        
-                                                        
                 </div>
                 <div className="card-body  f"  >
                      <h4>Vertrag & Arbeitszeiten</h4>
@@ -179,9 +173,6 @@ const GetJob = () => {
                           <li>{job.type }</li>
                           <li><strong>Arbeitstage: </strong>{(job.workingdays.map((day,index)=>day+(index+1<job.workingdays.length ? ', ':'')))}</li>
                         </ul>
-                          
-                     
-
                      <h3>Leistungen</h3> 
                       <ul>
                         {(job.performances.map(performance=>
@@ -194,17 +185,14 @@ const GetJob = () => {
                     <h3>Aufgaben</h3>  
                     <ol>
                        {(job.tasks.map((task)=><li className=''>{task}</li>))}
-                      
                     </ol>  
                     <h3>Fähigkeiten</h3>  
                     <ol>
                        {(job.skills.map((skill)=><li className=''>{skill}</li>))}
-                      
                     </ol>      
                     <h3>Sprachen</h3>  
                     <ol>
                        {(job.languages.map((language)=><li className=''>{language}</li>))}
-                      
                     </ol>
                     <ul className='p-0'>
                       <h3>Adresse</h3>

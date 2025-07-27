@@ -10,20 +10,21 @@ const addJob = asyncHandler(async (req, res) => {
    
     try {    
             const { title,companyName,category, description, type, work,workingdays, salary,tasks,skills,languages,performances, location,adresse } = req.body
+            console.log('req.body')
+             console.log(req.body)
+             console.log(req.file)
             if (!title || !description || !salary || !type || !work || !location || !category  ) 
                 {
                 if (req.file) {
                                     try {
                                         await fs.promises.unlink(req.file.path); // Delete file asynchronously
-                                    
-                                    } catch (err) {              
+
+                                    } catch (err) {
                                         return res.status(500).json({ message: 'File deletion failed' });
                                     }
                             }
                 return res.status(400).json({ message: 'Please fill all fields. Photo would not saved...' });  
             }
-           
-           
           const newJob = await Job.create({
             title,
             companyName,
@@ -44,12 +45,12 @@ const addJob = asyncHandler(async (req, res) => {
             user: req.user.id,
             category:category
           })
-              
+
           console.log('created Job is')
-          
+            console.log(newJob)
           res.status(201).json(newJob);
-    } catch (error) {   
-        console.log(error)  
+    } catch (error) {
+        console.log(error)
       res.status(400).json(error)
     }
 })
@@ -63,16 +64,15 @@ const getOneJob=asyncHandler(async(req,res)=>{
             throw new Error(' Job not Found !!!!')
         }
        res.status(200).json(job)
-        
+
     } catch (error) {
         console.log(error)
-        
+
     }
 
 })
 // get all Jobs  for user 
 const getMyJobs=asyncHandler(async(req,res)=>{
-   
     //const page = parseInt(req.params.currentPage) || 1;
             const limit = parseInt(req.params.limit) || 10;
           //  const skip = (page - 1) * limit;
@@ -89,12 +89,11 @@ const getMyJobs=asyncHandler(async(req,res)=>{
        // totalPages:Math.ceil(total/limit),
         //currentPage:page
        })
-        
+
     } catch (error) {
         console.log(error)
-        
+
     }
-   
 })
 // get all Jobs  for Homepage
 const getJobs=asyncHandler(async(req,res)=>{

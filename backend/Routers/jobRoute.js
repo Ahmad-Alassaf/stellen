@@ -3,7 +3,6 @@ const multer = require('multer')
 const upload = require("../Middleware/uploadMiddleware"); // Import middleware
 const {getMyJobs,getJobs,getOneJob,setJob,deleteJob, addJob,getRecomendedJobs,like,pulllike,savingJob,unsavingJob,addCandidate} =require('../Controllers/jobController')
 const router=express.Router()
-
 const protectRoute =require('../Middleware/authMiddleware')
 router.get('/myjobs/:limit/:currentPage',protectRoute,getMyJobs)// only my jobs
 router.get('/:limit',getJobs)// all jobs
@@ -14,6 +13,7 @@ router.post('/givelike/:id',protectRoute,like)
 router.post('/pulllike/:id',protectRoute,pulllike)
 router.post('/saveJob/:id',protectRoute,savingJob)
 router.post('/unsaveJob/:id',protectRoute,unsavingJob)
+// upload middleware upload image firstly then add job
 router.post('/',upload.single('file'),protectRoute,addJob)
 router.put('/:id',upload.single('file'),protectRoute,setJob)
 router.delete('/:id',protectRoute,deleteJob)

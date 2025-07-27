@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import Header from "./component/header";
 import axios from "axios";
 import Login from "./component/login";
@@ -25,9 +25,8 @@ import Footer from "./component/footer";
 import ContactUs from "./component/contactus";
 
 function App() {
-  const [cityInfo,setCityInfo]=useState(null)
   
- 
+  const [cityInfo,setCityInfo]=useState(null)
  
   const cityData=(data)=>{
     if(data)
@@ -35,11 +34,12 @@ function App() {
 
   }
   return (
-    <Router>
-      <Header />
-      <Search  getCityData={cityData}/>
-     
-       
+     <Router>
+     <Header />
+        <Search  getCityData={cityData}/>
+        
+   
+        
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -61,6 +61,7 @@ function App() {
       </Routes>
       <Footer />
     </Router>
+   
   );
 }
 
