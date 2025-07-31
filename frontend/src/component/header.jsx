@@ -41,7 +41,7 @@ useEffect(()=>{
     };
   }, [])
   return (
-    <div className="position-relative" id="navbar">
+    <div className="position-relative .noPDF" id="navbar">
       <nav className={`navbar navbar-expand-lg navbar-light baseStyle ${isSticky ? 'stickyStyle' : ''}  py-0`}   >
         <div className="container-fluid  ">
           <Link className="navbar-brand   text-white  text-center  py-0 " to="/">

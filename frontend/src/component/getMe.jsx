@@ -2,6 +2,10 @@ import React, { useState ,useEffect,useRef} from 'react'
 
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
+import html2pdf from 'html2pdf.js'
+
+
+
 import {Link,Outlet} from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { FaEdit ,FaTrash} from 'react-icons/fa'
@@ -251,23 +255,26 @@ const GetMe = () => {
     }
 
    }
-   const handleDownloadPDF = () => {
-    const elementToHide=document.querySelectorAll('.noPDF')
-    elementToHide.forEach(el => el.style.display = 'none')
-   
+const handleDownloadPDF = () => {
+  const elementToHide = document.querySelectorAll('.noPDF')
+  elementToHide.forEach(el => el.style.display = 'none')
   const input = pdfRef.current
-  html2canvas(input, { scale: 4, useCORS: true }).then((canvas) => {
-    const imgData = canvas.toDataURL('image/png')
-    const pdf = new jsPDF('p', 'mm', 'a4')
-    const imgProps = pdf.getImageProperties(imgData)
-    const pdfWidth = pdf.internal.pageSize.getWidth()
-    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight)
-    pdf.save('profile.pdf')
-    elementToHide.forEach(el => el.style.display = '')
+ html2pdf().set({
+        margin: [5, 0, 1, 0],
+        filename: 'my-pdf.pdf',
+        html2canvas: { scale: 4 , useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      }).from(input).save('my-pdf.pdf').then(() => {
+    // Restore visibility after PDF generation
+    elementToHide.forEach(el => (el.style.display = ''))
   })
+     
+   
+  
 }
-   useEffect(()=>{
+
+
+useEffect(()=>{
     getprofile()
    
    
@@ -275,13 +282,13 @@ const GetMe = () => {
   },[])
    const Style={
     backgroundColor:{
-      backgroundColor:'#0920FC',
-      color:'white',
+      backgroundColor:'rgb(242, 244, 247)',
+      color:'black',
      
     },
     h4style:{
-      backgroundColor:'#0920FC' ,
-      color:'white',
+      backgroundColor:'rgb(242, 244, 247)' ,
+      color:'black',
       borderTopRightRadius:'10px',
       
        padding: '5px'
@@ -289,53 +296,63 @@ const GetMe = () => {
 
     },
     h5style:{
-      backgroundColor:'#0920FC' ,
-      color:'white',
+      backgroundColor:'rgb(242, 244, 247)' ,
+      color:'black',
       borderTopRightRadius:'10px',
        borderBottomRightRadius:'10px',
        padding: '5px'
        
 
+    },
+    fontStyle:{
+
+       fontSize: '15px'
+
     }
     
   }
   return (
-    <div className='bg-light'>
-            <div className="container py-3" ref={pdfRef}>
+    <div className='bg-light' >
+            <div className="container py-3 px-0" ref={pdfRef} style={Style.fontStyle}>
               
             <div className="row p-0 m-0">
-              <div className="col-3 m-0   text-center" style={Style.backgroundColor}>
+              <div className="col-4 m-0   text-center" style={Style.backgroundColor}>
                 <div className='py-2'>
-                     <img src='/images/Bild1.jpg' className='img-fluid m-auto rounded' style={{height:'250px',width:'200px'}} />
-                     <p className='my-1 text-white '><strong>Ahmad Al Asaf</strong></p>
+                     <img src='/images/Bild1.jpg' className='img-fluid m-auto rounded ' style={{height:'250px',width:'200px'}} />
+                     <p className='my-1  '><strong>Ahmad Al Asaf</strong></p>
                 </div>
-                <div className='py-3 text-white'>
+                <div className='py-3 '>
                  
                   <p className='m-0'>eng.ahmad.alassaf@gmail.com</p>
                   <p className='m-0'>Tel: +4915175614666</p>
                    <p className='m-0'>WhatsApp: +4915175614666</p>
                 </div>
-                <div className='text-white py-3'>
+                <div className=' py-3'>
                   <h3>Persönliche Daten</h3>
                   <p  className='m-0'>25.02.1984 in Aleppo/Syrien</p>
                   <p className='m-0'>verheiratet </p>
                   <p className='m-0'> Syrisch/Deutsch</p>
                 </div>
-                <div className='text-white py-3'>
+                <div className=' py-3'>
                   <h3>Sprachkenntnisse</h3>
                   <p  className='m-0'>Deutsch( gut in Wort und Schrift</p>
                   <p className='m-0'>Englisch (gut)</p>
                   <p className='m-0'> Arabisch (Mutter Sprache)</p>
                 </div>
                 <div>
-                  <button className='btn btn-primary w-100'><FaEdit /></button>
+                  <button className='btn btn-primary w-100 noPDF'><FaEdit /></button>
                 </div>
                 
 
               </div>
               <div className="col-8 p-0 m-0 ">
-                <h3 className=' text-center' style={Style.h4style}>Full-Stack Webentwickler</h3>
-                <h4 className='px-1 text-center ' style={Style.h4style}>Beruflicher Werdegang</h4>
+                <div> 
+                  
+                  <h4 className=' text-center   m-0' style={Style.h4style}>Fullstack Developer/Webentwickler</h4>
+
+                </div>
+                
+                <h4 className='px-1 text-center mt-1' ><strong>Beruflicher Werdegang</strong></h4>
                 <div>
                      {profile?.careerHistory?.length >0 &&(profile?.careerHistory?.map((item,index)=>
                      <div key={index} className=' px-1 d-flex  align-items-center  mb-1  border-bottom'>
@@ -347,7 +364,7 @@ const GetMe = () => {
                               {item.tasks?.length>0 &&(item.tasks?.map((item,index)=>(<li key={index} className=''>{item}</li>)))}
                             </ul>
                            
-                            <p>{item.description}</p>
+                            <p style={Style.fontStyle}>{item.description}</p>
                       </div>
                       <div>
                        {editCareer &&(<button className='btn btn-danger' onClick={(e)=>deleteOneCareer(index)}> <FaTrash /> </button>)} 
@@ -400,13 +417,13 @@ const GetMe = () => {
                    
                 </form>
                 )}
-                  <h4 className='px-1 text-center' style={Style.h4style}>Bildung</h4>
+                  <h4 className='px-1 text-center' ><strong>Bildung</strong></h4>
                   {profile?.education.length>0 && (profile?.education?.map((item,index)=>(
-                       <div key={index} className=' m-1  d-flex justify-content-between align-items-center border-bottom'>
-                        <div className=" ">
+                       <div key={index} className=' mx-1 my-0 d-flex justify-content-between align-items-center border-bottom'>
+                        <div className=" mx-1">
                            <h5 className=' d-inline-block' style={Style.h5style}>{item.institute}</h5>
-                           <p>{format(item.start,'MMMM yyyy')}- {format(item.end,'MMMM yyyy')}</p>
-                           <p>{item.description}</p>
+                           <p className='mx-1 my-0'>{format(item.start,'MMMM yyyy')}- {format(item.end,'MMMM yyyy')}</p>
+                           <p className='mx-1 my-0'>{item.description}</p>
 
                         </div>
                         {editEducation && ( <button className='btn btn-danger' onClick={(e)=>{deleteOneeducation(index)}}><FaTrash /></button>)}
@@ -447,14 +464,14 @@ const GetMe = () => {
                   <button className='btn btn-primary w-100 my-1' type='submit'>Speichern</button>
                 </form>
                 )}
-                <h4 className='text-center text-white' style={Style.h4style}> Technologie Kenntnisse</h4>
+                <h4 className='text-center ' ><strong>Technologie Kenntnisse</strong> </h4>
                 <ul>
                     {profile?.skills.length>0 &&(profile?.skills.map((item,index)=>(
                       
-                        <li key={index} className=' m-1  d-flex justify-content-between align-items-center rounded '>
+                        <li key={index} className=' mx-1 my-0  d-flex justify-content-between align-items-center rounded '>
                             <div className=' w-100'>
                                   <div className=''>{item.name} </div> 
-                                  <p className='px-3 py-0 m-0 text-muted   '>{item.level}</p>
+                                  <p className='px-3 py-0 m-0 text-muted my-0  '>{item.level}</p>
                           </div>
                         {editSkills &&(  <button className='btn btn-danger' onClick={()=>deleteOneSkill(index)}><FaTrash/></button>)}
                         </li>
@@ -475,7 +492,7 @@ const GetMe = () => {
                  </form>
                  )}
                   
-                  <h4 className='text-center text-white' style={Style.h4style}>Projects</h4>
+                  <h4 className='text-center ' ><strong>Projects</strong></h4>
                 <ul>
                     {profile?.projects.length>0 &&(profile?.projects.map((item,index)=>(
                       
@@ -487,7 +504,7 @@ const GetMe = () => {
                                     <a  href={item.link}  target="_blank"   rel="noopener noreferrer"  className="px-1 text-primary" >{item.link} </a>
                                      </p> 
                                   {item.technologies.length>0 &&(item.technologies.map((item,index)=>(
-                                    <span key={index} className='border rounded px-1 mx-1'>{item}</span>)))}
+                                    <span key={index} className=' rounded px-1 mx-1'>{item}</span>)))}
                                   
                                   <p className='px-1 text-muted'>{item.description}</p>
                           </div>

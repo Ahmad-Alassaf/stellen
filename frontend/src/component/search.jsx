@@ -108,7 +108,7 @@ const style={
 }
   return (
 
-    (<div id='search' className=' d-flex justify-content-center align-items-center ' 
+    <div id='search' className=' d-flex justify-content-center align-items-center ' 
           style={{
           backgroundImage: `url(${jobsuche2})`,
           backgroundSize: 'cover',
@@ -149,7 +149,7 @@ const style={
         </div>
     </div>
 
-  ))
+  )
 }
 
 export default Search

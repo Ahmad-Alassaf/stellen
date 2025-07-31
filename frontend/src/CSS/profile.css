@@ -1,0 +1,5 @@
+@media print {
+  .noPDF {
+    display: none !important;
+  }
+}
